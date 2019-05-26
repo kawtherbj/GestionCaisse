@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GestionCaisse", "GestionCaisse\GestionCaisse.csproj", "{EE2C1237-487D-473E-91D9-77937F1CC120}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionCaisseData", "GestionCaisseData\GestionCaisseData.csproj", "{D15B3D34-B63F-4DE3-91A5-CBB5E05B7CBA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE2C1237-487D-473E-91D9-77937F1CC120}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2C1237-487D-473E-91D9-77937F1CC120}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2C1237-487D-473E-91D9-77937F1CC120}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2C1237-487D-473E-91D9-77937F1CC120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D15B3D34-B63F-4DE3-91A5-CBB5E05B7CBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D15B3D34-B63F-4DE3-91A5-CBB5E05B7CBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D15B3D34-B63F-4DE3-91A5-CBB5E05B7CBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D15B3D34-B63F-4DE3-91A5-CBB5E05B7CBA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58BDBE16-0C48-4A08-BF5A-E880AF7A470F}
+	EndGlobalSection
+EndGlobal
