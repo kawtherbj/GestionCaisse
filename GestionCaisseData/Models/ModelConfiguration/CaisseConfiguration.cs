@@ -15,6 +15,8 @@ namespace GestionCaisseData.Models.ModelConfiguration
 
             builder.Property(prop => prop.Nump);
 
+            builder.Property(prop => prop.Quantite);
+
             builder.Property(prop => prop.DateV);
 
         }

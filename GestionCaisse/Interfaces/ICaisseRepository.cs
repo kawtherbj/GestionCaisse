@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace GestionCaisse.Interfaces
 {
-   public interface IVenteRepository : IRepository<Vente>
+   public  interface ICaisseRepository : IRepository<Caisse>
     {
-        IEnumerable<Vente> GetAll();
-        IEnumerable<Vente> GetByCaisse(string id);
+
+
+
     }
 }

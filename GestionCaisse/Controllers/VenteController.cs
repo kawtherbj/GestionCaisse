@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GestionCaisseData.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionCaisse.Controllers
 {
@@ -18,7 +19,7 @@ namespace GestionCaisse.Controllers
         [HttpGet]
         public IActionResult GetVente()
         {
-            var ventes = Context.vente.ToList();
+            var ventes = Context.produit.ToList();
             return Ok(ventes);
         }
 
@@ -28,7 +29,7 @@ namespace GestionCaisse.Controllers
             var v = new Vente()
             {   
                 Numc = "123",
-                Nomp = "ABC",
+                Nump = 4,
             };
             Context.Add(v);
             Context.SaveChanges();

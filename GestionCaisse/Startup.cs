@@ -37,6 +37,10 @@ namespace GestionCaisse
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IVenteRepository, VenteRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICaisseRepository, CaisseRepository>();
+
+
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(options =>
   {
