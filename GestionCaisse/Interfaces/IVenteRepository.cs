@@ -8,7 +8,8 @@ namespace GestionCaisse.Interfaces
 {
    public interface IVenteRepository : IRepository<Vente>
     {
-        IEnumerable<Vente> GetAll();
+        IEnumerable<Vente> GetAll(string adresse);
         IEnumerable<Vente> GetByCaisse(string id);
+        IEnumerable<Vente> GetByDate(string jour, string mois, string annee, string id, string adresse);
     }
 }

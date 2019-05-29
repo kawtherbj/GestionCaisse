@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using GestionCaisse.Interfaces;
 using GestionCaisseData.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GestionCaisse.Controllers
 {
+    [EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+
     [Route("api/[controller]")]
    
     public class LoginController : Controller
@@ -54,17 +57,5 @@ namespace GestionCaisse.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-      /*  private UserModel AuthenticateUser(UserModel login)
-        {
-            UserModel user = null;
-
-            //Validate the User Credentials  
-            //Demo Purpose, I have Passed HardCoded User Information  
-            if (user.Username == "Jignesh")
-            {
-                user = new UserModel { Username = "Jignesh Trivedi", EmailAddress = "test.btest@gmail.com" };
-            }
-            return user;
-        }*/
     }
 }

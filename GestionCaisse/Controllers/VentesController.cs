@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 using GestionCaisse.Interfaces;
 using GestionCaisseData.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace GestionCaisse.Controllers
 {
+
     [Route("api/[controller]")]
     public class VentesController : Controller
     {
@@ -22,7 +24,7 @@ namespace GestionCaisse.Controllers
         }
 
 
-        [HttpGet("{caisse}")]
+        [HttpGet("caisse")]
       //  [Authorize]
         public IActionResult GetVente()
         {
@@ -34,15 +36,36 @@ namespace GestionCaisse.Controllers
             return Ok(v);
         }
 
+
+        [HttpGet("historiques")]
+        //  [Authorize]
+        public IActionResult GetByVenteDate()
+        {
+            var queryParams = HttpContext.Request.Query;
+
+            var id = queryParams["id"];
+            var j = queryParams["jour"];
+            var m = queryParams["mois"];
+            var a = queryParams["annee"];
+            var adresse = queryParams["adresse"];
+            var hist = VenteRepository.GetByDate(j, m, a, id,adresse);
+
+            return Ok(hist);
+        }
+       
         [HttpGet]
-        [Authorize]
+      //  [Authorize]
         public IActionResult GetVentes()
         {
-            var p = VenteRepository.GetAll();
+            var queryParams = HttpContext.Request.Query;
+            var adresse = queryParams["adresse"];
+
+            var p = VenteRepository.GetAll(adresse);
             float recette = 0;
             foreach (var i in p)
             {
                 recette += i.Quantite * i.prdt.Prix;
+               
             }
 
             return Ok(new { produits = p , recettes = recette });
@@ -52,7 +75,10 @@ namespace GestionCaisse.Controllers
      //   [Authorize]
         public IActionResult GetCaisse()
         {
-            var c = CaisseRepository.Get();
+            var queryParams = HttpContext.Request.Query;
+            var adresse = queryParams["adresse"];
+
+            var c = CaisseRepository.GetAll(adresse);
             JArray j = new JArray() ;
             
             foreach(var it in c) {
@@ -85,8 +111,8 @@ namespace GestionCaisse.Controllers
         {
             var v = new Vente()
             {
-                Numc = "123",
-                Nump = 14,
+                Numc = "12",
+                Nump = 17,
                 Quantite = 2,
             };
             VenteRepository.Add(v);

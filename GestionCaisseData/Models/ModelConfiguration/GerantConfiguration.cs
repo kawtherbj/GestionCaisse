@@ -15,6 +15,7 @@ namespace GestionCaisseData.Models.ModelConfiguration
             builder.Property(prop => prop.prenom);
             builder.Property(prop => prop.email);
             builder.Property(prop => prop.password);
+            builder.Property(prop => prop.Adresse);
         }
     }
 

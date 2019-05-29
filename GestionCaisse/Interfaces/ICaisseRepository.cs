@@ -9,7 +9,7 @@ namespace GestionCaisse.Interfaces
    public  interface ICaisseRepository : IRepository<Caisse>
     {
 
-
+        IEnumerable<Caisse> GetAll(string adresse);
 
     }
 }

@@ -15,5 +15,14 @@ namespace GestionCaisse.Implementations
         {
             Context = context;
         }
+
+        public IEnumerable<Caisse> GetAll(string adresse)
+        {
+            var q = from pr in Context.caisse.ToList()
+
+                    where  pr.Adresse == adresse
+                    select pr;
+            return q;
+        }
     }
 }

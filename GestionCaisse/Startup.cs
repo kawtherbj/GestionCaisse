@@ -18,6 +18,8 @@ namespace GestionCaisse
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,7 +41,15 @@ namespace GestionCaisse
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICaisseRepository, CaisseRepository>();
 
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200"
+                                     );
+                });
+            });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(options =>
@@ -70,7 +80,7 @@ namespace GestionCaisse
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>

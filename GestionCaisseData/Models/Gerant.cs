@@ -16,5 +16,7 @@ namespace GestionCaisseData.Models
 
         public string password { get; set; }
 
+        public string Adresse { get; set; }
+
     }
 }
