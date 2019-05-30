@@ -19,6 +19,8 @@ namespace GestionCaisseData.Models.ModelConfiguration
 
             builder.Property(prop => prop.DateV);
 
+            builder.Property(prop => prop.Paiement);
+
         }
     }
 

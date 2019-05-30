@@ -21,11 +21,11 @@ namespace GestionCaisse.Controllers
         public IActionResult CreateUser()
         {
             var v = new Gerant()
-            {
-                nom = "Bjaoui",
-                prenom = "Kawther",
+            { Adresse="Ariana",
+                nom = "Somrani",
+                prenom = "Nader",
                 password = "1234",
-                email = "kawther.bjaoui@gmail.com",
+                email = "nader.somrani@gmail.com",
             };
             UserRepository.Add(v);
             UserRepository.Save();

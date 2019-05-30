@@ -25,7 +25,7 @@ namespace GestionCaisse.Controllers
 
 
         [HttpGet("caisse")]
-      //  [Authorize]
+        [Authorize]
         public IActionResult GetVente()
         {
             var queryParams = HttpContext.Request.Query;
@@ -38,7 +38,7 @@ namespace GestionCaisse.Controllers
 
 
         [HttpGet("historiques")]
-        //  [Authorize]
+        [Authorize]
         public IActionResult GetByVenteDate()
         {
             var queryParams = HttpContext.Request.Query;
@@ -54,7 +54,7 @@ namespace GestionCaisse.Controllers
         }
        
         [HttpGet]
-      //  [Authorize]
+        [Authorize]
         public IActionResult GetVentes()
         {
             var queryParams = HttpContext.Request.Query;
@@ -62,17 +62,31 @@ namespace GestionCaisse.Controllers
 
             var p = VenteRepository.GetAll(adresse);
             float recette = 0;
+            float recettep = 0;
+            float recettec = 0;
             foreach (var i in p)
-            {
+            {   if (i.Paiement == " espece ") { 
                 recette += i.Quantite * i.prdt.Prix;
-               
+                }
+               else if (i.Paiement == "Par cheque")
+                {
+                    recettep += i.Quantite * i.prdt.Prix;
+                }else
+                {
+                    recettec += i.Quantite * i.prdt.Prix;
+                }
+
             }
 
-            return Ok(new { produits = p , recettes = recette });
+            return Ok(new { produits = p ,
+                           recetteTotal = recette+recettec+recettep ,
+                           recetteEspece = recette ,
+                           recetteCheque = recettep ,
+                           recetteCarte = recettec });
         }
 
         [HttpGet("caisses")]
-     //   [Authorize]
+        [Authorize]
         public IActionResult GetCaisse()
         {
             var queryParams = HttpContext.Request.Query;
@@ -83,20 +97,36 @@ namespace GestionCaisse.Controllers
             
             foreach(var it in c) {
                 float recette = 0;
+                float recettep = 0;
+                float recettec = 0;
                 var p = VenteRepository.GetByCaisse(it.Numero);
 
                 if (p!= null) { 
 
                 foreach (var i in p)
                    {
-                    recette += i.Quantite * i.prdt.Prix;
-                   }
+                        if (i.Paiement == " espece ")
+                        {
+                            recette += i.Quantite * i.prdt.Prix;
+                        }
+                        else if (i.Paiement == "Par cheque")
+                        {
+                            recettep += i.Quantite * i.prdt.Prix;
+                        }
+                        else
+                        {
+                            recettec += i.Quantite * i.prdt.Prix;
+                        }
+                    }
 
                 }
                 JObject x = new JObject(new JProperty("Numero", it.Numero),
                                         new JProperty("Magasin", it.Magasin), 
                                         new JProperty("Adresse", it.Adresse),
-                                        new JProperty("recettes", recette)
+                                        new JProperty("recetteTotal", recette+recettec+recettep),
+                                        new JProperty("recetteEspece", recette),
+                                        new JProperty("recetteParCheque", recettep),
+                                        new JProperty("recetteCarte", recettec)
                                         );
                 j.Add(x);
 
@@ -111,9 +141,10 @@ namespace GestionCaisse.Controllers
         {
             var v = new Vente()
             {
-                Numc = "12",
-                Nump = 17,
-                Quantite = 2,
+                Numc = "1",
+                Nump = 7,
+                Quantite = 4,
+                Paiement= "Par carte",
             };
             VenteRepository.Add(v);
             VenteRepository.Save();
@@ -121,6 +152,7 @@ namespace GestionCaisse.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize]
         public IActionResult RemoveVente(Guid id)
         {
           

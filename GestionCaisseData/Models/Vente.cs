@@ -27,6 +27,8 @@ namespace GestionCaisseData.Models
         public int Quantite { get;  set; }
 
         public DateTime DateV { get; set; }
+
+        public string Paiement { get; set; }
     }
 
 }

@@ -41,7 +41,7 @@ namespace GestionCaisse
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICaisseRepository, CaisseRepository>();
 
-            services.AddCors(options =>
+          /*  services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
                 builder =>
@@ -49,7 +49,7 @@ namespace GestionCaisse
                     builder.WithOrigins("http://localhost:4200"
                                      );
                 });
-            });
+            });*/
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
@@ -66,7 +66,7 @@ namespace GestionCaisse
                          };
                      });
 
-                    }
+          }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -80,7 +80,11 @@ namespace GestionCaisse
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseCors(MyAllowSpecificOrigins);
+            //app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(x => x
+              .AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader());
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc(routes =>
