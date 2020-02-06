@@ -50,8 +50,17 @@ namespace GestionCaisse.Implementations
                     where   pr.DateV.Day.ToString() == jour &&
                             pr.DateV.Month.ToString()== mois &&
                             pr.DateV.Year.ToString()==  annee &&
-                            pr.Numc == id &&
-                            pr.ca.Adresse == adresse
+                            pr.Numc == id 
+                    select pr;
+            return q;
+        }
+
+        public IEnumerable<Vente> GetByAdresse(string adresse)
+        {
+
+            var q = from pr in Context.vente.Include(o => o.ca).Include(v => v.prdt).ToList()
+
+                    where pr.ca.Adresse == adresse
                     select pr;
             return q;
         }

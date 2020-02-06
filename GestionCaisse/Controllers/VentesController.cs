@@ -48,11 +48,22 @@ namespace GestionCaisse.Controllers
             var m = queryParams["mois"];
             var a = queryParams["annee"];
             var adresse = queryParams["adresse"];
-            var hist = VenteRepository.GetByDate(j, m, a, id,adresse);
+            var hist = VenteRepository.GetByDate(j,m, a,id, adresse);
 
             return Ok(hist);
         }
-       
+
+        [HttpGet("allhistoriques")]
+        [Authorize]
+        public IActionResult GetAllVenteDate()
+        {
+            var queryParams = HttpContext.Request.Query;
+            var adresse = queryParams["adresse"];
+            var hist = VenteRepository.GetByAdresse(adresse);
+
+            return Ok(hist);
+        }
+
         [HttpGet]
         [Authorize]
         public IActionResult GetVentes()
@@ -65,10 +76,10 @@ namespace GestionCaisse.Controllers
             float recettep = 0;
             float recettec = 0;
             foreach (var i in p)
-            {   if (i.Paiement == " espece ") { 
+            {   if (i.Paiement == "espece") { 
                 recette += i.Quantite * i.prdt.Prix;
                 }
-               else if (i.Paiement == "Par cheque")
+               else if (i.Paiement == "cheque")
                 {
                     recettep += i.Quantite * i.prdt.Prix;
                 }else
@@ -99,17 +110,19 @@ namespace GestionCaisse.Controllers
                 float recette = 0;
                 float recettep = 0;
                 float recettec = 0;
+                float r = 0;
                 var p = VenteRepository.GetByCaisse(it.Numero);
 
                 if (p!= null) { 
 
                 foreach (var i in p)
                    {
-                        if (i.Paiement == " espece ")
+                        r++;
+                        if (i.Paiement == "espece")
                         {
                             recette += i.Quantite * i.prdt.Prix;
                         }
-                        else if (i.Paiement == "Par cheque")
+                        else if (i.Paiement == "cheque")
                         {
                             recettep += i.Quantite * i.prdt.Prix;
                         }
@@ -126,7 +139,8 @@ namespace GestionCaisse.Controllers
                                         new JProperty("recetteTotal", recette+recettec+recettep),
                                         new JProperty("recetteEspece", recette),
                                         new JProperty("recetteParCheque", recettep),
-                                        new JProperty("recetteCarte", recettec)
+                                        new JProperty("recetteCarte", recettec),
+                                        new JProperty("NombreVente", r )
                                         );
                 j.Add(x);
 
@@ -141,10 +155,10 @@ namespace GestionCaisse.Controllers
         {
             var v = new Vente()
             {
-                Numc = "1",
-                Nump = 7,
-                Quantite = 4,
-                Paiement= "Par carte",
+                Numc = "123",
+                Nump = 11,
+                Quantite = 5,
+                Paiement= "espece",
             };
             VenteRepository.Add(v);
             VenteRepository.Save();
